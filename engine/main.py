@@ -45,7 +45,7 @@ class Engine:
                 sys.exit()
     
     def render(self):
-        self.ctx.clear(color=(0.1, 0.05, 0.4))
+        self.ctx.clear(color=(0.64, 0.898, 0.92))
         
         self.scene.render()
 

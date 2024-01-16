@@ -1,4 +1,8 @@
-from model import Cube
+from model import Cube, Tail
+from random import randint
+
+SCENE_WIDTH = 50
+SCENE_DEPTH = 50
 
 
 class Scene:
@@ -12,13 +16,16 @@ class Scene:
     
     def load(self):
         app = self.app
-        add = self.add_object
+        self.generate(app)
 
-        n, s = 50, 2
-        for x in range(-n, n, s):
-            for z in range(-n, n, s):
-                add(Cube(app, pos=(x, -s, z), scale=(1, 0.2, 1)))
-        
+    def generate(self, app):
+        s = 2
+        numbers = [4, 5, 6]
+        for x in range(-SCENE_WIDTH, SCENE_WIDTH, s):
+            for z in range(-SCENE_DEPTH, SCENE_DEPTH, s):
+                if randint(1, 10) in numbers:
+                    self.add_object(Cube(app, pos=(x, -s, z), scale=(1, 2, 1), texture_id=2)) 
+                self.add_object(Tail(app, pos=(x, -s*2.1, z), rot=(90, 0, 0), texture_id=1))
     
     def render(self):
         for obj in self.objects:

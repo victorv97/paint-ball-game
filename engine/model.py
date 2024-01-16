@@ -59,3 +59,32 @@ class Cube(BaseModel):
         self.program['m_proj'].write(self.app.camera.m_proj)
         self.program['m_view'].write(self.app.camera.m_view)
         self.program['m_model'].write(self.m_model)
+
+
+class Tail(BaseModel):
+
+    def __init__(self, app, vao_name='tail', texture_id=0, pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)):
+        super().__init__(app, vao_name, texture_id, pos, rot, scale)
+        self.texture = self.app.mesh.texture.textures[self.texture_id]
+        self.on_init()
+
+    def update(self):
+        self.texture.use()
+        #m_model = glm.rotate(self.m_model, self.app.time * 0.5, glm.vec3(0, 1, 0))
+        self.program['m_model'].write(self.m_model)
+        self.program['m_view'].write(self.app.camera.m_view)
+        self.program['camPos'].write(self.app.camera.position)
+
+    def on_init(self):
+        # light
+        self.program['light.position'].write(self.app.light.position)
+        self.program['light.Ia'].write(self.app.light.Ia)
+        self.program['light.Id'].write(self.app.light.Id)
+        self.program['light.Is'].write(self.app.light.Is)
+        # texture
+        self.program['u_texture_0'] = 0
+        self.texture.use()
+        # matrixes
+        self.program['m_proj'].write(self.app.camera.m_proj)
+        self.program['m_view'].write(self.app.camera.m_view)
+        self.program['m_model'].write(self.m_model)

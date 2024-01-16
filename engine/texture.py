@@ -8,6 +8,7 @@ class Texture:
         self.textures = {}
         self.textures[0] = self.get_texture('engine\\textures\\box.jpg')
         self.textures[1] = self.get_texture('engine\\textures\\tail.jpg')
+        self.textures[2] = self.get_texture('engine\\textures\\wall.jpg')
 
     def get_texture(self, path):
         texture = pg.image.load(path).convert()
