@@ -3,6 +3,7 @@ import pygame as pg
 import moderngl as mgl
 
 from camera import Camera
+from player import Player
 from light import Light
 from mesh import Mesh
 from scene import Scene
@@ -31,7 +32,7 @@ class Engine:
         # light
         self.light = Light()
         # camera
-        self.camera = Camera(self)
+        self.camera = Player(self)  #Camera(self)
         # mesh
         self.mesh = Mesh(self)
         # scene
