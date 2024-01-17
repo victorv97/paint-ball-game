@@ -2,8 +2,8 @@ import glm
 import pygame as pg
 from camera import Camera
 
-SPEED = 0.008
-GRAVITY = 0.0008
+SPEED = 0.006
+GRAVITY = 0.0002
 HEIGHT_INIT = -2
 
 class Player(Camera):
@@ -14,15 +14,16 @@ class Player(Camera):
     
     def move(self):
         velocity = SPEED * self.app.delta_time
+        next_step = glm.vec2() 
         keys = pg.key.get_pressed()
         if keys[pg.K_w]:
-            self.move_forward(velocity)
+            next_step = self.move_forward(velocity)
         if keys[pg.K_s]:
-            self.move_backward(velocity)
+            next_step = self.move_backward(velocity)
         if keys[pg.K_d]:
-            self.move_right(velocity)
+            next_step = self.move_right(velocity)
         if keys[pg.K_a]:
-            self.move_left(velocity)
+            next_step = self.move_left(velocity)
 
         if self.on_ground and keys[pg.K_SPACE]:
             self.on_ground = False
@@ -35,19 +36,33 @@ class Player(Camera):
         if self.position.y < HEIGHT_INIT:
             self.position.y = HEIGHT_INIT
             self.on_ground = True
+        
+        self.make_step(next_step)
+    
+    def make_step(self, next_step):
+        if not self.check_collision(d_x=next_step[0]):
+            self.position.x += next_step[0]
+
+        if not self.check_collision(d_z=next_step[1]):
+            self.position.z += next_step[1]
     
     def move_forward(self, velocity):
-        self.position.x += self.forward.x * velocity
-        self.position.z += self.forward.z * velocity
+        return self.forward.xz * velocity
 
     def move_backward(self, velocity):
-        self.position.x -= self.forward.x * velocity
-        self.position.z -= self.forward.z * velocity
+        return -self.forward.xz * velocity
 
     def move_right(self, velocity):
-        self.position.x += self.right.x * velocity
-        self.position.z += self.right.z * velocity
+        return self.right.xz * velocity
 
     def move_left(self, velocity):
-        self.position.x -= self.right.x * velocity
-        self.position.z -= self.right.z * velocity
+        return -self.right.xz * velocity
+
+    def check_collision(self, d_x=0, d_z=0):
+        pos_x = (self.position.x + d_x + (1.5 if d_x > 0 else -1.5 if d_x < 0 else 0))
+        pos_z = (self.position.z + d_z + (1.5 if d_z > 0 else -1.5 if d_z < 0 else 0))
+        for obj in self.app.scene.map:
+            if glm.sqrt((pos_x - obj[0])**2 + (pos_z - obj[1])**2) <= 1.01:
+                return True
+        return False
+        #return (pos_x, pos_z) in self.app.scene.map
