@@ -107,15 +107,6 @@ class TailVBO(BaseVBO):
         texture_coord_indices = [
             (0, 2, 3), (0, 1, 2),
         ]
-        normals = [
-            (0, 0, 1) * 6,
-            (1, 0, 0) * 6,
-            (0, 0, -1) * 6,
-            (-1, 0, 0) * 6,
-            (0, 1, 0) * 6,
-            (0, -1, 0) * 6,
-        ]
-        normals = np.array(normals, dtype='f4').reshape(36, 3)
         texture_coord_data = self.get_data(texture_coord, texture_coord_indices)
 
         vertex_data = np.hstack([texture_coord_data, vertex_data])

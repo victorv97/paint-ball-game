@@ -16,17 +16,13 @@ class Player(Camera):
         velocity = SPEED * self.app.delta_time
         keys = pg.key.get_pressed()
         if keys[pg.K_w]:
-            self.position.x += self.forward.x * velocity
-            self.position.z += self.forward.z * velocity
+            self.move_forward(velocity)
         if keys[pg.K_s]:
-            self.position.x -= self.forward.x * velocity
-            self.position.z -= self.forward.z * velocity
+            self.move_backward(velocity)
         if keys[pg.K_d]:
-            self.position.x += self.right.x * velocity
-            self.position.z += self.right.z * velocity
+            self.move_right(velocity)
         if keys[pg.K_a]:
-            self.position.x -= self.right.x * velocity
-            self.position.z -= self.right.z * velocity
+            self.move_left(velocity)
 
         if self.on_ground and keys[pg.K_SPACE]:
             self.on_ground = False
@@ -39,3 +35,19 @@ class Player(Camera):
         if self.position.y < HEIGHT_INIT:
             self.position.y = HEIGHT_INIT
             self.on_ground = True
+    
+    def move_forward(self, velocity):
+        self.position.x += self.forward.x * velocity
+        self.position.z += self.forward.z * velocity
+
+    def move_backward(self, velocity):
+        self.position.x -= self.forward.x * velocity
+        self.position.z -= self.forward.z * velocity
+
+    def move_right(self, velocity):
+        self.position.x += self.right.x * velocity
+        self.position.z += self.right.z * velocity
+
+    def move_left(self, velocity):
+        self.position.x -= self.right.x * velocity
+        self.position.z -= self.right.z * velocity

@@ -55,9 +55,13 @@ class Engine:
     def get_time(self):
         self.time = pg.time.get_ticks() * 0.001
 
+    def update_fps(self):
+        print('fps: ', int(self.clock.get_fps()), end='\r')
+
     def run(self):
         while True:
             self.get_time()
+            self.update_fps()
             self.check_events()
             self.camera.update()
             self.render()
