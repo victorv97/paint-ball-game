@@ -65,9 +65,9 @@ class Player(Camera):
         return -self.right.xz * velocity
 
     def check_collision(self, d_x=0, d_z=0):
-        pos_x = (self.position.x + d_x + (1.5 if d_x > 0 else -1.5 if d_x < 0 else 0))
-        pos_z = (self.position.z + d_z + (1.5 if d_z > 0 else -1.5 if d_z < 0 else 0))
+        pos_x = self.position.x + d_x
+        pos_z = self.position.z + d_z
         for obj in self.app.scene.map:
-            if glm.sqrt((pos_x - obj[0])**2 + (pos_z - obj[1])**2) <= 1.01:
+            if (obj[0] - 1.5 < pos_x < obj[0] + 1.5) and (obj[1] - 1.5 < pos_z < obj[1] + 1.5):
                 return True
         return False

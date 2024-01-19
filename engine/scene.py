@@ -27,7 +27,7 @@ class Scene:
                     position = (x, -s, z)
                     self.add_object(Cube(app, pos=position, scale=(1, 2, 1), texture_id=2))
                     self.map.add((position[0], position[2]))  # store x, z
-        self.add_object(Tail(app, pos=(0, -s*2.01, 0), scale=(SCENE_WIDTH, SCENE_WIDTH, 1), rot=(90, 0, 0), texture_id=1))
+        self.add_object(Cube(app, pos=(0, -s*2.01, 0), scale=(SCENE_WIDTH, 0.2, SCENE_DEPTH), rot=(0, 0, 0), texture_id=1))
     
     def render(self):
         for obj in self.objects:
