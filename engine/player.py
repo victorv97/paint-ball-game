@@ -1,6 +1,7 @@
 import glm
 import pygame as pg
 from camera import Camera
+from ball import Ball
 
 SPEED = 0.006
 GRAVITY = 0.0002
@@ -11,6 +12,11 @@ class Player(Camera):
         super().__init__(app, position, yaw, pitch)
         self.on_ground = True
         self.vertical_velocity = 0
+    
+    def handle_event(self, event):
+        if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
+            ball_pos = (self.position + self.forward*1.5).to_tuple()
+            self.app.scene.add_object(Ball(self.app, pos=ball_pos))
     
     def move(self):
         velocity = SPEED * self.app.delta_time
@@ -65,4 +71,3 @@ class Player(Camera):
             if glm.sqrt((pos_x - obj[0])**2 + (pos_z - obj[1])**2) <= 1.01:
                 return True
         return False
-        #return (pos_x, pos_z) in self.app.scene.map

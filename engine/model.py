@@ -4,7 +4,7 @@ import glm
 class BaseModel:
     def __init__(self, app, vao_name, texture_id, pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)) -> None:
         self.app = app
-        self.pos = pos
+        self.pos = glm.vec3(pos)
         self.rot = glm.vec3([glm.radians(angle) for angle in rot])
         self.scale = scale
         self.m_model = self.get_model_matrix()
@@ -41,7 +41,6 @@ class Cube(BaseModel):
 
     def update(self):
         self.texture.use()
-        #m_model = glm.rotate(self.m_model, self.app.time * 0.5, glm.vec3(0, 1, 0))
         self.program['m_model'].write(self.m_model)
         self.program['m_view'].write(self.app.camera.m_view)
         self.program['camPos'].write(self.app.camera.position)
@@ -70,7 +69,6 @@ class Tail(BaseModel):
 
     def update(self):
         self.texture.use()
-        #m_model = glm.rotate(self.m_model, self.app.time * 0.5, glm.vec3(0, 1, 0))
         self.program['m_model'].write(self.m_model)
         self.program['m_view'].write(self.app.camera.m_view)
         self.program['camPos'].write(self.app.camera.position)

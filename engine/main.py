@@ -44,6 +44,7 @@ class Engine:
                 self.mesh.destroy()
                 pg.quit()
                 sys.exit()
+            self.camera.handle_event(event)
     
     def render(self):
         self.ctx.clear(color=(0.64, 0.898, 0.92))
