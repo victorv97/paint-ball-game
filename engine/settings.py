@@ -1,0 +1,21 @@
+
+
+# Scene settings
+SCENE_WIDTH = 20
+SCENE_DEPTH = 20
+BACKGROUND_COLOR = (0.64, 0.898, 0.92)
+
+# Camera settings
+FOV = 70
+NEAR = 0.1
+FAR = 140
+CAMERA_SPEED = 0.01
+SENSITIVITY = 0.06
+
+# Player settings
+PLAYER_SPEED = 0.006
+PLAYER_HEIGHT = 2
+
+# World settings
+GRAVITY = 0.0002
+GROUND_HEIGHT = 0

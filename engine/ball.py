@@ -1,8 +1,9 @@
 import glm
 from model import ExtendedBase
+from settings import GRAVITY, GROUND_HEIGHT
+
 
 SPEED = 0.08
-GRAVITY = 0.0001
 
 
 class BallAttached(ExtendedBase):
@@ -38,7 +39,7 @@ class Ball(ExtendedBase):
         return vel
 
     def make_step(self):
-        if self.pos.y <= -4:
+        if self.pos.y < GROUND_HEIGHT:
             self.velocity = glm.vec3(0, 0, 0)
             self.destroy()
         else:

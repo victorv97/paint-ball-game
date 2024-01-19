@@ -1,12 +1,6 @@
 import glm
 import pygame as pg
-
-
-FOV = 50
-NEAR = 0.1
-FAR = 100
-SPEED = 0.01
-SENSITIVITY = 0.06
+from settings import FOV, NEAR, FAR, CAMERA_SPEED, SENSITIVITY
 
 
 class Camera:
@@ -47,7 +41,7 @@ class Camera:
         self.pitch = max(-89, min(89, self.pitch))
     
     def move(self):
-        velocity = SPEED * self.app.delta_time
+        velocity = CAMERA_SPEED * self.app.delta_time
         keys = pg.key.get_pressed()
         if keys[pg.K_w]:
             self.position += self.forward * velocity

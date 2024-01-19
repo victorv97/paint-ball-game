@@ -2,24 +2,22 @@ import glm
 import pygame as pg
 from camera import Camera
 from ball import Ball
+from settings import PLAYER_SPEED, PLAYER_HEIGHT, GRAVITY
 
-SPEED = 0.006
-GRAVITY = 0.0002
-HEIGHT_INIT = -2
 
 class Player(Camera):
-    def __init__(self, app, position=(25, HEIGHT_INIT, 25), yaw=-90, pitch=0) -> None:
+    def __init__(self, app, position=(25, PLAYER_HEIGHT, 25), yaw=-90, pitch=0) -> None:
         super().__init__(app, position, yaw, pitch)
         self.on_ground = True
         self.vertical_velocity = 0
     
     def handle_event(self, event):
         if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
-            ball_pos = (self.position + self.forward*1.5).to_tuple()
+            ball_pos = (self.position + self.forward + self.right*0.7 - self.up*0.4).to_tuple()
             self.app.scene.add_object(Ball(self.app, pos=ball_pos))
     
     def move(self):
-        velocity = SPEED * self.app.delta_time
+        velocity = PLAYER_SPEED * self.app.delta_time
         next_step = glm.vec2() 
         keys = pg.key.get_pressed()
         if keys[pg.K_w]:
@@ -39,8 +37,8 @@ class Player(Camera):
             self.position.y += self.up.y * self.vertical_velocity
             self.vertical_velocity -= GRAVITY * self.app.delta_time
         
-        if self.position.y < HEIGHT_INIT:
-            self.position.y = HEIGHT_INIT
+        if self.position.y < PLAYER_HEIGHT:
+            self.position.y = PLAYER_HEIGHT
             self.on_ground = True
         
         self.make_step(next_step)
