@@ -1,4 +1,5 @@
-from model import Cube, Tail
+from model import Cube
+from ball import BallAttached
 from random import randint
 
 SCENE_WIDTH = 20
@@ -15,6 +16,9 @@ class Scene:
     def add_object(self, obj):
         self.objects.append(obj)
     
+    def remove_object(self, obj):
+        self.objects.remove(obj)
+    
     def load(self):
         self.generate(self.app)
 
@@ -27,6 +31,7 @@ class Scene:
                     position = (x, -s, z)
                     self.add_object(Cube(app, pos=position, scale=(1, 2, 1), texture_id=2))
                     self.map.add((position[0], position[2]))  # store x, z
+        self.add_object(BallAttached(app, texture_id=3))
         self.add_object(Cube(app, pos=(0, -s*2.01, 0), scale=(SCENE_WIDTH, 0.2, SCENE_DEPTH), rot=(0, 0, 0), texture_id=1))
     
     def render(self):

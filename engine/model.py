@@ -32,57 +32,39 @@ class BaseModel:
         self.vao.render()
 
 
-class Cube(BaseModel):
+class ExtendedBase(BaseModel):
+    def __init__(self, app, vao_name, texture_id=0, pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)):
+       super().__init__(app, vao_name, texture_id, pos, rot, scale)
+       self.texture = self.app.mesh.texture.textures[self.texture_id]
+       self.on_init()
+
+    def update(self):
+        self.texture.use()
+        self.program['m_model'].write(self.m_model)
+        self.program['m_view'].write(self.app.camera.m_view)
+        self.program['camPos'].write(self.app.camera.position)  
+
+    def on_init(self):
+        # light
+        self.program['light.position'].write(self.app.light.position)
+        self.program['light.Ia'].write(self.app.light.Ia)
+        self.program['light.Id'].write(self.app.light.Id)
+        self.program['light.Is'].write(self.app.light.Is)
+        # texture
+        self.program['u_texture_0'] = 0
+        self.texture.use()
+        # matrixes
+        self.program['m_proj'].write(self.app.camera.m_proj)
+        self.program['m_view'].write(self.app.camera.m_view)
+        self.program['m_model'].write(self.m_model) 
+
+class Cube(ExtendedBase):
 
     def __init__(self, app, vao_name='cube', texture_id=0, pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)):
         super().__init__(app, vao_name, texture_id, pos, rot, scale)
-        self.texture = self.app.mesh.texture.textures[self.texture_id]
-        self.on_init()
-
-    def update(self):
-        self.texture.use()
-        self.program['m_model'].write(self.m_model)
-        self.program['m_view'].write(self.app.camera.m_view)
-        self.program['camPos'].write(self.app.camera.position)
-
-    def on_init(self):
-        # light
-        self.program['light.position'].write(self.app.light.position)
-        self.program['light.Ia'].write(self.app.light.Ia)
-        self.program['light.Id'].write(self.app.light.Id)
-        self.program['light.Is'].write(self.app.light.Is)
-        # texture
-        self.program['u_texture_0'] = 0
-        self.texture.use()
-        # matrixes
-        self.program['m_proj'].write(self.app.camera.m_proj)
-        self.program['m_view'].write(self.app.camera.m_view)
-        self.program['m_model'].write(self.m_model)
 
 
-class Tail(BaseModel):
+class Tail(ExtendedBase):
 
     def __init__(self, app, vao_name='tail', texture_id=0, pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)):
         super().__init__(app, vao_name, texture_id, pos, rot, scale)
-        self.texture = self.app.mesh.texture.textures[self.texture_id]
-        self.on_init()
-
-    def update(self):
-        self.texture.use()
-        self.program['m_model'].write(self.m_model)
-        self.program['m_view'].write(self.app.camera.m_view)
-        self.program['camPos'].write(self.app.camera.position)
-
-    def on_init(self):
-        # light
-        self.program['light.position'].write(self.app.light.position)
-        self.program['light.Ia'].write(self.app.light.Ia)
-        self.program['light.Id'].write(self.app.light.Id)
-        self.program['light.Is'].write(self.app.light.Is)
-        # texture
-        self.program['u_texture_0'] = 0
-        self.texture.use()
-        # matrixes
-        self.program['m_proj'].write(self.app.camera.m_proj)
-        self.program['m_view'].write(self.app.camera.m_view)
-        self.program['m_model'].write(self.m_model)

@@ -8,7 +8,7 @@ GRAVITY = 0.0002
 HEIGHT_INIT = -2
 
 class Player(Camera):
-    def __init__(self, app, position=(0, HEIGHT_INIT, 0), yaw=-90, pitch=0) -> None:
+    def __init__(self, app, position=(25, HEIGHT_INIT, 25), yaw=-90, pitch=0) -> None:
         super().__init__(app, position, yaw, pitch)
         self.on_ground = True
         self.vertical_velocity = 0
